@@ -15,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Author: zrb
@@ -89,6 +86,7 @@ public class LotteryOpenPageProcess extends IWebService implements WcpPageProces
         //获取网页里面class为zumc的那段代码
         Element element = doc.getElementById("pagedata");
         List<Node> nodeList = element.childNodes();
+        List<LotteryOpen> lotteryOpens = new ArrayList<>();
         for (int i = 0; i < nodeList.size(); i++) {
             if (i == 0) {
                 continue;
@@ -138,8 +136,11 @@ public class LotteryOpenPageProcess extends IWebService implements WcpPageProces
                 repository.save(preOpen);
             }
             log.info("obj => " + mapper.writeValueAsString(lotteryOpen));
-            repository.save(lotteryOpen);
+            //repository.save(lotteryOpen);
+            lotteryOpens.add(lotteryOpen);
+
         }
+        repository.saveAll(lotteryOpens);
 
     }
 
@@ -147,13 +148,13 @@ public class LotteryOpenPageProcess extends IWebService implements WcpPageProces
         LotteryOpenPageProcess process = new LotteryOpenPageProcess();
 
         process.processByDocument("", "");
-       /* Map map = new HashMap();
+        Map map = new HashMap();
         map.put("startqi","20170421079");
         map.put("endqi","20170421081");
         map.put("searchType","9");
 
         String result = IWebService.sendPost(URL,map);
-        System.out.println(result);*/
+        System.out.println(result);
     }
 
 }

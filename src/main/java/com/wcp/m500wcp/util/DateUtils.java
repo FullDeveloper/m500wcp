@@ -1,6 +1,8 @@
 package com.wcp.m500wcp.util;
 
 
+import java.text.DateFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -151,17 +153,13 @@ public class DateUtils {
         return c.get(Calendar.DAY_OF_MONTH);
     }
 
-    public static int toDateAddDay(Date date,int day){
-
-        new SimpleDateFormat("yyyyMMdd").format(date);
-
+    public static String toDateAddDay(Date date,int day){
+        DateFormat format = new SimpleDateFormat("yyyyMMdd");
         Calendar c = Calendar.getInstance();
         c.setTime(date);
-        c.add(Calendar.DAY_OF_MONTH, 1);// 今天+1天
-
+        c.add(Calendar.DAY_OF_MONTH, day);// 今天+1天
         Date tomorrow = c.getTime();
-//        System.out.println("明天是:" + f.format(tomorrow));
-        return 0;
+        return format.format(tomorrow);
     }
 
     /**
